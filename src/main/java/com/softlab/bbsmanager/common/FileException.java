@@ -7,7 +7,7 @@ package com.softlab.bbsmanager.common;
  * @Date 2020/2/22 16:43
  * @Version 1.0
  */
-public class FileException extends Exception {
+public class FileException extends RuntimeException {
     public FileException(String message, Throwable cause){
         super(message, cause);
     }
