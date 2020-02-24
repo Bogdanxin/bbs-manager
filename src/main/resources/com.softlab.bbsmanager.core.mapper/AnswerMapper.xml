@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softlab.bbsmanager.core.mapper.AnswerMapper">
+    <resultMap id="Answer" type="com.softlab.bbsmanager.core.model.Answer">
+        <result property="answerId" column="ans_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="answerContent" column="ans_content"/>
+        <result property="boardId" column="board_id"/>
+        <result property="questionId" column="que_id"/>
+        <result property="answerLikeNum" column="ans_likenum"/>
+        <result property="answerTop" column="answer_top"/>
+        <result property="answerCreateTime" column="ans_createtime"/>
+    </resultMap>
+
+    <insert id="insertAnswer" parameterType="Answer">
+        insert
+        into answers
+        (ans_id, user_id, ans_content, board_id, que_id,
+        ans_likenum, ans_top, ans_createtime)
+        value
+        (#{answerId}, #{userId}, #{answerContent}, #{boardId},
+        #{questionId}, #{answerLikeNum}, #{answerTop}, #{answerCreateTime})
+    </insert>
+
+    <update id="updateAnswer">
+        update answers
+        <set>
+            <if test="answerContent != null and '' != answerContent">
+                ans_content = #{answerContent},
+            </if>
+            <if test="answerLikeNum != null">
+                ans_likenum = #{answerLikeNum},
+            </if>
+            <if test="answerTop != null">
+                ans_top = #{answerTop},
+            </if>
+            <if test="answerCreateTime != null and '' != answerCreateTime">
+                ans_createtime = #{answerCreateTime}
+            </if>
+        </set>
+        where ans_id = #{answerId}
+    </update>
+
+    <delete id="deleteAnswerById" parameterType="String">
+        delete *
+        from answers
+        where ans_id = #{answerId}
+    </delete>
+
+    <select id="selectAnswerById" parameterType="String" resultMap="Answer">
+        select *
+        from answers
+        where ans_id = #{answerId}
+    </select>
+
+    <select id="selectAnswerByUserId" resultMap="Answer" parameterType="String">
+        select *
+        from answers
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectAnswerByQuestion" parameterType="String" resultMap="Answer">
+        select *
+        from answers
+        where que_id = #{questionId}
+    </select>
+</mapper>

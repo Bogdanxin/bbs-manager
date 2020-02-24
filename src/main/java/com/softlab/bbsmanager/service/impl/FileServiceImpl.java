@@ -7,6 +7,7 @@ import com.softlab.bbsmanager.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,7 @@ import java.nio.file.StandardCopyOption;
  * @Date 2020/2/23 19:09
  * @Version 1.0
  */
+@Service
 public class FileServiceImpl implements FileService {
 
     private final Path fileStorageLocation;
