@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softlab.bbsmanager.core.mapper.BoardMapper">
+    <resultMap id="Board" type="com.softlab.bbsmanager.core.model.Board">
+        <result property="boardId" column="board_id"/>
+        <result property="boardName" column="board_name"/>
+        <result property="boardMasterId" column="board_master_id"/>
+        <result property="boardIntroduction" column="board_introduction"/>
+        <result property="boardCreateTime" column="board_createtime"/>
+    </resultMap>
+
+    <insert id="insertBoard" parameterType="Board">
+        insert into boards
+        (board_id, board_name, board_master_id,
+        board_introduction, board_createtime)
+        values
+        (#{boardId}, #{boardName}, #{boardMasterId},
+        #{boardIntroduction}, #{boardCreateTime})
+    </insert>
+
+    <delete id="deleteBoardById" parameterType="String">
+        delete from boards
+        where board_id = #{boardId}
+    </delete>
+
+    <update id="updateBoard" >
+        update boards
+        <set>
+            <if test="boardName != null and '' != boardName">
+                board_name = #{boardName},
+            </if>
+            <if test="boardMasterId != null">
+                board_master_id = #{boardMasterId},
+            </if>
+            <if test="boardIntroduction != null and '' != boardIntroduction">
+                board_introduction = #{boardIntroduction}
+            </if>
+        </set>
+        where board_id = #{boardId}
+    </update>
+
+    <select id="selectBoardByMasterId" parameterType="String" resultMap="Board">
+        select *
+        from boards
+        where board_master_id = #{boardMasterId}
+    </select>
+
+    <select id="selectBoardById" parameterType="String" resultMap="Board">
+        select *
+        from boards
+        where board_id = #{boardId}
+    </select>
+</mapper>

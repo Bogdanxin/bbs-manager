@@ -61,4 +61,19 @@ public interface AnswerMapper {
      * @return
      */
     List<Answer> selectAnswerByQuestionId(String questionId);
+
+    /**
+     * 访问者点赞
+     * @param answerId
+     * @return
+     */
+    int likeIt(String answerId);
+
+    /**
+     * 文章的锁定
+     * @param answerId
+     * @param lock
+     * @return
+     */
+    int answerLock(@Param("answerId") String answerId, @Param("lock")int lock);
 }

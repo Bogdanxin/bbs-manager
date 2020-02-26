@@ -42,8 +42,7 @@
     </update>
 
     <delete id="deleteAnswerById" parameterType="String">
-        delete *
-        from answers
+        delete from answers
         where ans_id = #{answerId}
     </delete>
 
@@ -64,4 +63,16 @@
         from answers
         where que_id = #{questionId}
     </select>
+
+    <update id="likeIt" parameterType="int">
+        update answers
+        set ans_likenum = ans_likenum + 1
+        where ans_id = #{answerId}
+    </update>
+
+    <update id="answerLock" parameterType="int">
+        update answers
+        set ans_lock = #{answerLock}
+        where ans_id = #{answerId}
+    </update>
 </mapper>

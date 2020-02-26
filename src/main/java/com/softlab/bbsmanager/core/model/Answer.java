@@ -53,4 +53,9 @@ public class Answer {
      * 传入到数据库中就是datetime类型
      */
     private String answerCreateTime;
+
+    /**
+     * 回答锁定
+     */
+    private int answerLock;
 }
