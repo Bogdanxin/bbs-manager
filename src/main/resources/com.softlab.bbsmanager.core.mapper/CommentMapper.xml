@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softlab.bbsmanager.core.mapper.CommentMapper">
+    <resultMap id="Comment" type="com.softlab.bbsmanager.core.model.Comment">
+        <result property="commentId" column="com_id"/>
+        <result property="commentType" column="com_type"/>
+        <result property="articleId" column="art_id"/>
+        <result property="answerId" column="ans_id"/>
+        <result property="commentContent" column="com_content"/>
+        <result property="commentLikeNum" column="com_likenum"/>
+        <result property="commentCreateTime" column="com_createtime"/>
+        <result property="userId" column="user_id"/>
+        <result property="commentTop" column="com_top"/>
+        <result property="toCommentId" column="to_com_id"/>
+    </resultMap>
+    
+    <insert id="insertComment">
+        insert
+        into comments
+        (com_id, com_type, com_content, com_likenum,
+        com_createtime, user_id, com_top,
+        <if test="commentType == 0">
+            art_id
+        </if>
+        <if test="commentType == 1">
+            ans_id
+        </if>
+        <if test="commentType == 2">
+            to_com_id
+        </if>)
+        values
+        (#{commentId}, #{commentType}, #{commentContent},
+        #{commentLikeNum}, #{commentCreateTime}, #{user_id},
+        #{commentTop}, #{id});
+    </insert>
+
+    <insert id="insertArticleComment">
+        insert into comments
+        (com_id, com_type, art_id, com_content,
+        com_likenum, com_createtime, user_id, com_top)
+        values
+        (#{comment.commentId}, #{comment.commentType}, #{articleId},
+        #{comment.commentContent}, #{comment.commentLikeNum}, #{comment.commentCreateTime},
+        #{comment.userId}, #{comment.commentTop})
+    </insert>
+
+    <insert id="insertAnswerComment">
+        insert into comments
+        (com_id, com_type, ans_id, com_content,
+        com_likenum, com_createtime, user_id, com_top)
+        values
+        (#{comment.commentId}, #{comment.commentType}, #{answerId},
+        #{comment.commentContent}, #{comment.commentLikeNum},
+        #{comment.commentCreateTime}, #{comment.userId}, #{comment.commentTop});
+    </insert>
+
+    <insert id="insertCommentToComment">
+        insert into comments
+        (com_id, com_type, to_com_id, com_content,
+        com_likenum, com_createtime, user_id, com_top)
+        values
+        (#{comment.commentId}, #{comment.commentType}, #{toCommentId},
+        #{comment.commentContent}, #{comment.commentLikeNum},
+        #{comment.commentCreateTime}, #{comment.userId}, #{comment.commentTop});
+    </insert>
+
+    <update id="updateComment">
+        update comments
+        <set>
+            <if test="comment.commentContent != null and '' != comment.commentContent">
+                com_content = #{comment.commentContent},
+            </if>
+            <if test="comment.commentLikeNum != null">
+                com_likenum = #{comment.commentLikeNum},
+            </if>
+            <if test="comment.commentTop != null">
+                com_top = #{comment.commentTop}
+            </if>
+        </set>
+        where com_id = #{commentId}
+    </update>
+
+    <delete id="deleteCommentById" parameterType="String">
+        delete from comments
+        where com_id = #{commentId}
+    </delete>
+
+    <select id="selectCommentByArticleId" resultMap="Comment">
+        select * from
+        comments
+        where art_id = #{articleId}
+    </select>
+
+    <select id="selectCommentByAnswerId" resultMap="Comment">
+        select * from
+        comments
+        where ans_id = #{answerId}
+    </select>
+
+    <select id="selectCommentByCommentId" resultMap="Comment">
+        select * from
+        comments
+        where to_com_id = #{toCommentId}
+    </select>
+
+    <select id="selectCommentById" resultMap="Comment">
+        select * from
+        comments
+        where com_id = #{commentId}
+    </select>
+</mapper>
