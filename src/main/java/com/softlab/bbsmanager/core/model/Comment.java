@@ -59,7 +59,7 @@ public class Comment {
     private int commentTop;
 
     /**
-     * 对comment的评论
+     * 对comment的评论，指向评论的评论
      */
     private String toCommentId;
 }

@@ -111,4 +111,15 @@ public class AnswerApi {
             return new RestData(1,e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/likeAnswer/{id}", method = RequestMethod.POST)
+    public RestData likeAnswer(@PathVariable String id){
+        logger.info("like this answer by id : "+id);
+
+        try {
+            return answerService.likeAnswer(id);
+        }catch (BbsException e){
+            return new RestData(1,e.getMessage());
+        }
+    }
 }

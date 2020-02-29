@@ -25,17 +25,19 @@
     <update id="updateAnswer">
         update answers
         <set>
-            <if test="answerContent != null and '' != answerContent">
-                ans_content = #{answerContent},
+            <if test="answer.answerContent != null
+            and '' != answer.answerContent">
+                ans_content = #{answer.answerContent},
             </if>
-            <if test="answerLikeNum != null">
-                ans_likenum = #{answerLikeNum},
+            <if test="answer.answerLikeNum != null">
+                ans_likenum = #{answer.answerLikeNum},
             </if>
-            <if test="answerTop != null">
-                ans_top = #{answerTop},
+            <if test="answer.answerTop != null">
+                ans_top = #{answer.answerTop},
             </if>
-            <if test="answerCreateTime != null and '' != answerCreateTime">
-                ans_createtime = #{answerCreateTime}
+            <if test="answer.answerCreateTime != null
+            and '' != answer.answerCreateTime">
+                ans_createtime = #{answer.answerCreateTime}
             </if>
         </set>
         where ans_id = #{answerId}
@@ -64,7 +66,7 @@
         where que_id = #{questionId}
     </select>
 
-    <update id="likeIt" parameterType="int">
+    <update id="likeAnswer" parameterType="String">
         update answers
         set ans_likenum = ans_likenum + 1
         where ans_id = #{answerId}

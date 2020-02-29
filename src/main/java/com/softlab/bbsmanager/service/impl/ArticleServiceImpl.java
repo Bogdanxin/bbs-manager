@@ -55,8 +55,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public RestData likeIt(String articleId) throws BbsException {
-        if (articleMapper.likeIt(articleId) > 0) {
+    public RestData likeArticle(String articleId) throws BbsException {
+        if (articleMapper.likeArticle(articleId) > 0) {
             return new RestData(0,"点赞成功！");
         }else {
             throw new BbsException("点赞失败！");

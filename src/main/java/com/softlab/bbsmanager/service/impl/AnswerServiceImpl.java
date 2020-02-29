@@ -96,6 +96,7 @@ public class AnswerServiceImpl implements AnswerService {
                 map.put("answerLikeNum", answer.getAnswerLikeNum());
                 map.put("answerTop", answer.getAnswerTop());
                 map.put("answerCreateTime", answer.getAnswerCreateTime());
+                al.add(map);
             }
         }else {
             throw new BbsException("查找失败！");
@@ -123,5 +124,14 @@ public class AnswerServiceImpl implements AnswerService {
             throw new BbsException("查找失败！");
         }
         return al;
+    }
+
+    @Override
+    public RestData likeAnswer(String answerId) throws BbsException {
+        if (answerMapper.likeAnswer(answerId) > 0) {
+            return new RestData(0,"点赞成功！");
+        }else {
+            throw new BbsException("点赞失败！");
+        }
     }
 }

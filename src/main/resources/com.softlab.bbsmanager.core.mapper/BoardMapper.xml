@@ -26,14 +26,15 @@
     <update id="updateBoard" >
         update boards
         <set>
-            <if test="boardName != null and '' != boardName">
-                board_name = #{boardName},
+            <if test="board.boardName != null and '' != board.boardName">
+                board_name = #{board.boardName},
             </if>
-            <if test="boardMasterId != null">
-                board_master_id = #{boardMasterId},
+            <if test="board.boardMasterId != null">
+                board_master_id = #{board.boardMasterId},
             </if>
-            <if test="boardIntroduction != null and '' != boardIntroduction">
-                board_introduction = #{boardIntroduction}
+            <if test="board.boardIntroduction != null and
+            '' != board.boardIntroduction">
+                board_introduction = #{board.boardIntroduction}
             </if>
         </set>
         where board_id = #{boardId}

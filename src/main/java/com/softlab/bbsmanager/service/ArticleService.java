@@ -40,7 +40,7 @@ public interface ArticleService {
      * @return
      * @throws BbsException
      */
-    RestData likeIt(String articleId) throws BbsException;
+    RestData likeArticle(String articleId) throws BbsException;
 
     /**
      * 查找指定id的文章

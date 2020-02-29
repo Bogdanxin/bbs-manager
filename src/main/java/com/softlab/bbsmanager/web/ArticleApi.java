@@ -60,12 +60,12 @@ public class ArticleApi {
         }
     }*/
 
-    @RequestMapping(value = "/likeIt/{id}", method = RequestMethod.POST)
-    public RestData likeIt(@PathVariable String id){
+    @RequestMapping(value = "/likeArticle/{id}", method = RequestMethod.POST)
+    public RestData likeArticle(@PathVariable String id){
         logger.info("like it id :" +id);
 
         try {
-            return articleService.likeIt(id);
+            return articleService.likeArticle(id);
         }catch (BbsException e){
             return new RestData(1,e.getMessage());
         }

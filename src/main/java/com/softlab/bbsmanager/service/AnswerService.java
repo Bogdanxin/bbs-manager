@@ -64,4 +64,12 @@ public interface AnswerService {
      * @throws BbsException
      */
     List<Map<String, Object>> selectAnswerByQuestionId(String questionId) throws BbsException;
+
+    /**
+     * 点赞功能
+     * @param answerId
+     * @return
+     * @throws BbsException
+     */
+    RestData likeAnswer(String answerId) throws BbsException;
 }

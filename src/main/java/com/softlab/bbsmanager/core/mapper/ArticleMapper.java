@@ -39,7 +39,7 @@ public interface ArticleMapper {
      * @param articleId
      * @return
      */
-    int likeIt(String articleId);
+    int likeArticle(String articleId);
 
     /**
      * 添加一个article
@@ -54,7 +54,8 @@ public interface ArticleMapper {
      * @param articleId
      * @return
      */
-    int updateArticle(@Param("article") Article article, @Param("articleId") String articleId);
+    int updateArticle(@Param("article") Article article,
+                      @Param("articleId") String articleId);
 
     /**
      * 查找指定id的文章

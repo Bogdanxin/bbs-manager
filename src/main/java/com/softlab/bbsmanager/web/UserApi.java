@@ -112,5 +112,14 @@ public class UserApi {
         }
     }
 
+    @RequestMapping(value = "/signUp", method = RequestMethod.POST)
+    public RestData signUp(@RequestBody User user){
+        logger.info("sign up user");
 
+        try {
+            return userService.insertUser(user);
+        }catch (BbsException b){
+            return new RestData(1, b.getMessage());
+        }
+    }
 }

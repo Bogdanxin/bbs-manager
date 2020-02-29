@@ -19,6 +19,7 @@ public interface QuestionService {
      * 添加一个问题
      * @param question
      * @return
+     * @throws BbsException
      */
     RestData insertQuestion(Question question) throws BbsException;
 
@@ -27,6 +28,7 @@ public interface QuestionService {
      * @param question
      * @param questionId
      * @return
+     * @throws BbsException
      */
     RestData updateQuestion(Question question, String questionId) throws BbsException;
 
@@ -34,6 +36,7 @@ public interface QuestionService {
      * 删除指定id的问题
      * @param questionId
      * @return
+     * @throws BbsException
      */
     RestData deleteQuestionById(String questionId) throws BbsException;
 
@@ -42,6 +45,7 @@ public interface QuestionService {
      * @param questionId
      * @param lock
      * @return
+     * @throws BbsException
      */
     RestData lockQuestionById(String questionId, int lock) throws BbsException;
 
@@ -49,6 +53,7 @@ public interface QuestionService {
      * 查找指定id用问题
      * @param questionId
      * @return
+     * @throws BbsException
      */
     Map<String, Object> selectQuestionById(String questionId) throws BbsException;
 
@@ -56,6 +61,7 @@ public interface QuestionService {
      * 查找指定id的用户的所有问题
      * @param userId
      * @return
+     * @throws BbsException
      */
     List<Map<String, Object>> selectQuestionByUserId(String userId) throws BbsException;
 }

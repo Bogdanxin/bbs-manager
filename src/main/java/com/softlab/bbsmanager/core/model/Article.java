@@ -1,6 +1,7 @@
 package com.softlab.bbsmanager.core.model;
 
 import lombok.Data;
+import org.omg.CORBA.INTERNAL;
 
 /**
  * @ClassName Article
@@ -31,7 +32,7 @@ public class Article {
     /**
      * 文章的点赞数
      */
-    private Integer articleLikeNum;
+    private int articleLikeNum;
 
     /**
      * 文章的题目

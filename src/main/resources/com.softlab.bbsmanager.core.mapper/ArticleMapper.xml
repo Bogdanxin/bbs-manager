@@ -5,7 +5,8 @@
         <result column="art_id" property="articleId"/>
         <result column="user_id" property="userId"/>
         <result column="art_content" property="articleContent"/>
-        <result column="art_likenum" property="articleTitle"/>
+        <result column="art_likenum" property="articleLikeNum"/>
+        <result column="art_title" property="articleTitle"/>
         <result column="art_createtime" property="articleCreateTime"/>
     </resultMap>
 
@@ -20,8 +21,8 @@
         where art_id = #{articleId}
     </update>
 
-    <update id="likeIt" parameterType="String">
-        update aritcles
+    <update id="likeArticle" parameterType="String">
+        update articles
         set art_likenum = art_likenum + 1
         where art_id = #{articleId}
     </update>
@@ -36,12 +37,20 @@
         #{articleLock})
     </insert>
 
-    <update id="updateArticle" parameterType="Article">
+    <!--这里有一个要注意的点，没有用if判断的方法，假如前端传入数据为空或者没有传入该项目，写入数据库中就会把原来的数据置空-->
+    <update id="updateArticle">
         update articles
-        set
-        art_content = #{articleContent},
-        art_likenum = #{articleLikeNum},
-        art_title = #{articleTitle}
+        <set>
+            <if test="article.articleContent != null and '' != article.articleContent">
+                art_content = #{article.articleContent},
+            </if>
+            <if test="article.articleLikeNum != null">
+                art_likenum = #{article.articleLikeNum},
+            </if>
+            <if test="article.articleTitle != null and '' != article.articleTitle">
+                art_title = #{article.articleTitle}
+            </if>
+        </set>
         where art_id = #{articleId}
     </update>
 

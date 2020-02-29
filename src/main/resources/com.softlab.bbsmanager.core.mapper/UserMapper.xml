@@ -19,14 +19,16 @@
         <result property="userToken" column="user_token"/>
     </resultMap>
 
+    <!--<trim> 标签 用来补全，替换-->
     <insert id="insertUser" parameterType="User">
         insert into 
         users
-        (user_id,user_name, user_password, user_email,
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        user_id,user_name, user_password, user_email,user_integral,
         <if test="userSex != null and '' != userSex">
             user_sex,
         </if>
-        <if test="userPhone != null and '' != userPhone">
+        <if test="userPhone != null">
             user_phone,
         </if>
         <if test="userImage != null and '' != userImage">
@@ -44,15 +46,17 @@
         <if test="userIntroduction != null and '' != userIntroduction">
             user_introduction,
         </if>
-        <if test="userType != null and '' != userType">
+        <if test="userType != null">
             user_type
         </if>
-        )value (
-        #{userId},#{userName}, #{userPassword}, #{userEmail},
+        </trim>
+
+        <trim prefix="value(" suffix=")" suffixOverrides=",">
+        #{userId},#{userName}, #{userPassword}, #{userEmail}, 0,
         <if test="userSex != null and '' != userSex">
             #{userSex},
         </if>
-        <if test="userPhone != null and '' != userPhone">
+        <if test="userPhone != null">
             #{userPhone},
         </if>
         <if test="userImage != null and '' != userImage">
@@ -70,10 +74,10 @@
         <if test="userIntroduction != null and '' != userIntroduction">
             #{userIntroduction},
         </if>
-        <if test="userType != null a">
+        <if test="userType != null">
             #{userType}
         </if>
-        )
+        </trim>
     </insert>
     
     <delete id="deleteUserById" parameterType="String">

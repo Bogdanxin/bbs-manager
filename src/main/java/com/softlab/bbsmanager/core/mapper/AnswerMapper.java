@@ -67,7 +67,7 @@ public interface AnswerMapper {
      * @param answerId
      * @return
      */
-    int likeIt(String answerId);
+    int likeAnswer(String answerId);
 
     /**
      * 文章的锁定
@@ -76,4 +76,5 @@ public interface AnswerMapper {
      * @return
      */
     int answerLock(@Param("answerId") String answerId, @Param("lock")int lock);
+
 }
