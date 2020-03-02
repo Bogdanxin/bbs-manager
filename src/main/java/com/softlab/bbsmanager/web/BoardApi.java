@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Version 1.0
  */
 @RestController
+@CrossOrigin(origins = "*")
 public class BoardApi {
 
     private final static Logger logger = LoggerFactory.getLogger(BoardApi.class);

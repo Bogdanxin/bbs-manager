@@ -23,6 +23,7 @@ import java.awt.image.BandedSampleModel;
  * @Version 1.0
  */
 @RestController
+@CrossOrigin(origins = "*")
 public class AnswerApi {
 
     private final static int BOARD_MASTER = 3;
