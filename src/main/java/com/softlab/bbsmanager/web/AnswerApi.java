@@ -63,7 +63,7 @@ public class AnswerApi {
         }
     }
 
-    @RequestMapping(value = "/getAnswersById/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getAnswerById/{id}",method = RequestMethod.GET)
     RestData getAllAnswers(@PathVariable String id/*, HttpServletRequest request*/){
         logger.info("get answers by id: "+id);
 //        if (VerifyUtil.verifyUserType(request) != BOARD_MASTER) {

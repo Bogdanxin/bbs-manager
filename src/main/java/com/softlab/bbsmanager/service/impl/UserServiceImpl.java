@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService {
             map = new HashMap<>(14);
             map.put("userId", user.getUserId());
             map.put("userName", user.getUserName());
-            map.put("userPassword", user.getUserPassword());
             map.put("userSex", user.getUserSex());
             map.put("userEmail", user.getUserEmail());
             map.put("userPhone", user.getUserPhone());
@@ -97,10 +96,9 @@ public class UserServiceImpl implements UserService {
         List<Map<String, Object>> al = new ArrayList<>();
         if (users != null) {
             for (User user : users){
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>(14);
                 map.put("userId", user.getUserId());
                 map.put("userName", user.getUserName());
-                map.put("userPassword", user.getUserPassword());
                 map.put("userSex", user.getUserSex());
                 map.put("userEmail", user.getUserEmail());
                 map.put("userPhone", user.getUserPhone());
@@ -146,7 +144,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectUserByIdAndPassword(userId, password);
         Map<String, Object> map = null;
         if (user != null) {
-            map = new HashMap<>();
+            map = new HashMap<>(3);
             map.put("userId", user.getUserId());
             map.put("userToken", user.getUserToken());
             map.put("userType", user.getUserType());

@@ -15,11 +15,11 @@
     <insert id="insertAnswer" parameterType="Answer">
         insert
         into answers
-        (ans_id, user_id, ans_content, board_id, que_id,
-        ans_likenum, ans_top, ans_createtime)
+        (ans_id, user_id, ans_content, board_id,
+        que_id,ans_top, ans_createtime, answer_likenum)
         value
         (#{answerId}, #{userId}, #{answerContent}, #{boardId},
-        #{questionId}, #{answerLikeNum}, #{answerTop}, #{answerCreateTime})
+        #{questionId}, #{answerTop}, #{answerCreateTime}, 0)
     </insert>
 
     <update id="updateAnswer">

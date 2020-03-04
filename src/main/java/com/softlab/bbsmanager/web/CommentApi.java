@@ -100,7 +100,7 @@ public class CommentApi {
         }
     }
 
-    @RequestMapping(value = "/getCommentByAnswerId/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCommentsByAnswerId/{id}", method = RequestMethod.GET)
     public RestData getCommentByAnswerId(@PathVariable String id){
         logger.info("get comment by answer id : " + id);
 

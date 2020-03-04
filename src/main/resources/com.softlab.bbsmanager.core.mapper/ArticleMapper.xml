@@ -32,9 +32,8 @@
         (art_id, user_id, art_content, art_likenum,
         art_title, art_createtime, art_lock)
         value
-        (#{articleId}, #{userId}, #{articleContent},
-        #{articleLikeNum}, #{articleTitle}, #{articleCreateTime},
-        #{articleLock})
+        (#{articleId}, #{userId}, #{articleContent}, 0,
+        #{articleTitle}, #{articleCreateTime},#{articleLock})
     </insert>
 
     <!--这里有一个要注意的点，没有用if判断的方法，假如前端传入数据为空或者没有传入该项目，写入数据库中就会把原来的数据置空-->
