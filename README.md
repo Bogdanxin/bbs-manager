@@ -91,17 +91,17 @@
 
   ```json
   {
-      "userId": "u1",//应该是用户输入自己的id（一串字符）然后加上u表示用户
+      "userId": "u1",
       "userName":"name",
       "userPassword":"abcdef",
       "userEmial": "xxxxx@xxxx.com"
-      "userSex": "男",//可空，以下都是可以为空的
+      "userSex": "男",
       "userPhone": 13456737322,
       "userImage": "头像的路径",
       "userGrade": "年级",
       "userMajor": "专业",
       "userAcademy": "学院",
-      "userIntroduction": "用户简介"，
+      "userIntroduction": "用户简介",
       "userType": 1
   }
   ```
@@ -201,7 +201,9 @@
               "boardId": "b1",
               "userId": "u1"
           },
-          ...
+          {
+           
+          } 
      	]
   }
   ```
