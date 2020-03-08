@@ -10,16 +10,18 @@
         <result property="answerLikeNum" column="ans_likenum"/>
         <result property="answerTop" column="answer_top"/>
         <result property="answerCreateTime" column="ans_createtime"/>
+        <result property="answerLock" column="ans_lock"/>
     </resultMap>
 
-    <insert id="insertAnswer" parameterType="Answer">
+    <insert id="insertAnswer" >
         insert
         into answers
         (ans_id, user_id, ans_content, board_id,
-        que_id,ans_top, ans_createtime, answer_likenum)
+        que_id,ans_top, ans_createtime,
+        answer_likenum, ans_lock)
         value
-        (#{answerId}, #{userId}, #{answerContent}, #{boardId},
-        #{questionId}, #{answerTop}, #{answerCreateTime}, 0)
+        (#{answer.answerId}, #{answer.userId}, #{answer.answerContent},
+        #{answer.boardId}, #{questionId}, 0, #{answer.answerCreateTime}, 0, 0)
     </insert>
 
     <update id="updateAnswer">
@@ -34,10 +36,6 @@
             </if>
             <if test="answer.answerTop != null">
                 ans_top = #{answer.answerTop},
-            </if>
-            <if test="answer.answerCreateTime != null
-            and '' != answer.answerCreateTime">
-                ans_createtime = #{answer.answerCreateTime}
             </if>
         </set>
         where ans_id = #{answerId}
@@ -77,4 +75,8 @@
         set ans_lock = #{answerLock}
         where ans_id = #{answerId}
     </update>
+
+    <select id="getAnswerLock">
+        select ans_lock from answers where ans_id = #{answerId}
+    </select>
 </mapper>

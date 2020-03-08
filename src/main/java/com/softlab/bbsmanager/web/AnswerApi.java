@@ -6,21 +6,20 @@ import com.softlab.bbsmanager.common.util.JsonUtil;
 import com.softlab.bbsmanager.common.util.VerifyUtil;
 import com.softlab.bbsmanager.core.model.Answer;
 import com.softlab.bbsmanager.service.AnswerService;
+import com.softlab.bbsmanager.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.image.BandedSampleModel;
 
 /**
- * @ClassName AnswerApi
- * @Description answer web层
- * @Author gwx
- * @Date 2020/2/24 15:29
- * @Version 1.0
+ * @className AnswerApi
+ * @description answer web层
+ * @author gwx
+ * @date 2020/2/24 15:29
+ * @version 1.0
  */
 @RestController
 @CrossOrigin(origins = "*")
@@ -103,11 +102,11 @@ public class AnswerApi {
     }
 
     @RequestMapping(value = "/insertAnswer", method = RequestMethod.POST)
-    RestData insertAnswer(@RequestBody Answer answer){
+    RestData insertAnswer(@RequestBody Answer answer, @RequestParam("questionId") String questionId){
         logger.info("insert answer: " + JsonUtil.getJsonFromObj(answer));
 
         try {
-            return answerService.insertAnswer(answer);
+            return answerService.insertAnswer(answer, questionId);
         }catch (BbsException e){
             return new RestData(1,e.getMessage());
         }
@@ -121,6 +120,23 @@ public class AnswerApi {
             return answerService.likeAnswer(id);
         }catch (BbsException e){
             return new RestData(1,e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/lockAnswer/{id}", method = RequestMethod.POST)
+    public RestData lockIt(@PathVariable String id,
+                           /*HttpServletRequest request, */
+                           @RequestParam int lock){
+        logger.info("lock answer by id : " + id);
+
+        /*if (VerifyUtil.verifyUserType(request) != BOARD_MASTER) {
+            return new RestData(1,"用户未授权！");
+        }*/
+
+        try {
+            return answerService.lockAnswer(id, lock);
+        }catch (BbsException b){
+            return new RestData(1,b.getMessage());
         }
     }
 }

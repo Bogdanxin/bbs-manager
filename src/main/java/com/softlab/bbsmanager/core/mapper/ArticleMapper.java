@@ -32,7 +32,7 @@ public interface ArticleMapper {
      * @return
      */
     int lockArticleById(@Param("articleId") String articleId,
-                        @Param("lock")int lock);
+                        @Param("articleLock")int lock);
 
     /**
      * 访问者点赞
@@ -70,4 +70,11 @@ public interface ArticleMapper {
      * @return
      */
     List<Article> selectArticleByUserId(String userId);
+
+    /**
+     * 获取指定文章的锁
+     * @param articleId
+     * @return
+     */
+    int getArticleLock(String articleId);
 }

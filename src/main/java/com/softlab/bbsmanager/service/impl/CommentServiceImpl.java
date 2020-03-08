@@ -2,6 +2,8 @@ package com.softlab.bbsmanager.service.impl;
 
 import com.softlab.bbsmanager.common.BbsException;
 import com.softlab.bbsmanager.common.RestData;
+import com.softlab.bbsmanager.core.mapper.AnswerMapper;
+import com.softlab.bbsmanager.core.mapper.ArticleMapper;
 import com.softlab.bbsmanager.core.mapper.CommentMapper;
 import com.softlab.bbsmanager.core.model.Comment;
 import com.softlab.bbsmanager.service.CommentService;
@@ -24,10 +26,16 @@ import java.util.Map;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
+    private final ArticleMapper articleMapper;
+    private final AnswerMapper answerMapper;
 
     @Autowired
-    public CommentServiceImpl(CommentMapper commentMapper) {
+    public CommentServiceImpl(CommentMapper commentMapper,
+                              ArticleMapper articleMapper,
+                              AnswerMapper answerMapper) {
         this.commentMapper = commentMapper;
+        this.articleMapper = articleMapper;
+        this.answerMapper = answerMapper;
     }
 
     @Override
@@ -41,6 +49,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public RestData insertArticleComment(Comment comment, String articleId) throws BbsException {
+        if (articleMapper.getArticleLock(articleId) == 0) {
+            return new RestData(1,"该文章已锁定！无法评论！");
+        }
+
         if (commentMapper.insertArticleComment(comment, articleId) > 0){
             return new RestData(0,"添加成功！");
         }else {
@@ -50,6 +62,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public RestData insertAnswerComment(Comment comment, String answerId) throws BbsException {
+        if (answerMapper.getAnswerLock(answerId) == 0) {
+            return new RestData(1,"该回答已锁定！无法评论！");
+        }
+
         if (commentMapper.insertAnswerComment(comment, answerId) > 0) {
             return new RestData(0, "添加成功！");
         }else {
@@ -59,6 +75,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public RestData insertCommentToComment(Comment comment, String toCommentId) throws BbsException {
+        if (commentMapper.getCommentLock(toCommentId) == 0) {
+            return new RestData(1,"该评论已锁定，无法评论！");
+        }
+
         if (commentMapper.insertCommentToComment(comment, toCommentId) > 0) {
             return new RestData(0, "添加成功！");
         }else {
@@ -178,5 +198,18 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return map;
+    }
+
+    @Override
+    public RestData lockCommentById(String commentId, int lock) throws BbsException {
+        if (commentMapper.lockComment(commentId, lock) > 0) {
+            return (lock == 1)?
+                    new RestData(0, "解锁成功！")
+                    : new RestData(0, "锁定成功！");
+        }else {
+            throw (lock == 1)?
+                    new BbsException( "解锁失败！")
+                    : new BbsException("锁定失败！");
+        }
     }
 }

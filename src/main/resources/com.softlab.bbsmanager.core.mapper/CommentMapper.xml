@@ -12,6 +12,7 @@
         <result property="userId" column="user_id"/>
         <result property="commentTop" column="com_top"/>
         <result property="toCommentId" column="to_com_id"/>
+        <result property="commentLock" column="com_lock"/>
     </resultMap>
     
     <insert id="insertComment">
@@ -107,5 +108,15 @@
         select * from
         comments
         where com_id = #{commentId}
+    </select>
+
+    <update id="lockComment">
+        update comments
+        set com_lock = #{commentLock}
+        where com_id = #{commentId}
+    </update>
+
+    <select id="getCommentLock">
+        select com_lock from comments where com_id = #{commentId}
     </select>
 </mapper>

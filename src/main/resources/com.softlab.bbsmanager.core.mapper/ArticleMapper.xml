@@ -8,6 +8,7 @@
         <result column="art_likenum" property="articleLikeNum"/>
         <result column="art_title" property="articleTitle"/>
         <result column="art_createtime" property="articleCreateTime"/>
+        <result column="art_lock" property="articleLock"/>
     </resultMap>
 
     <delete id="deleteArticleById" parameterType="String">
@@ -33,7 +34,7 @@
         art_title, art_createtime, art_lock)
         value
         (#{articleId}, #{userId}, #{articleContent}, 0,
-        #{articleTitle}, #{articleCreateTime},#{articleLock})
+        #{articleTitle}, #{articleCreateTime}, 0)
     </insert>
 
     <!--这里有一个要注意的点，没有用if判断的方法，假如前端传入数据为空或者没有传入该项目，写入数据库中就会把原来的数据置空-->
@@ -63,5 +64,9 @@
         select *
         from articles
         where user_id = #{userId}
+    </select>
+
+    <select id="getArticleLock">
+        select art_lock from articles where art_id = #{articleId}
     </select>
 </mapper>

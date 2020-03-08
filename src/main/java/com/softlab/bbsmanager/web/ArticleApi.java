@@ -46,20 +46,20 @@ public class ArticleApi {
         }
     }
 
-    /*@RequestMapping(value = "/lockArticle/{id}", method = RequestMethod.POST)
-    public RestData lockArticleById(@PathVariable String id*//*, HttpServletRequest request*//*,
+    @RequestMapping(value = "/lockArticle/{id}", method = RequestMethod.POST)
+    public RestData lockArticleById(@PathVariable String id/*, HttpServletRequest request*/,
                                     @RequestParam("lock") int lock){
         logger.info("lock article by id: "+id);
 
-        *//*if (VerifyUtil.verifyUserType(request) != BOARD_MASTER) {
+       /* if (VerifyUtil.verifyUserType(request) != BOARD_MASTER) {
             return new RestData(1,"用户未授权！");
-        }*//*
+        }*/
         try {
             return articleService.lockArticleById(id, lock);
         }catch (BbsException e){
             return new RestData(1,e.getMessage());
         }
-    }*/
+    }
 
     @RequestMapping(value = "/likeArticle/{id}", method = RequestMethod.POST)
     public RestData likeArticle(@PathVariable String id){

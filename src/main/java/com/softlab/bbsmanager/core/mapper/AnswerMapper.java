@@ -21,9 +21,11 @@ public interface AnswerMapper {
     /**
      * 添加一个回答
      * @param answer
+     * @param questionId
      * @return
      */
-    int insertAnswer(Answer answer);
+    int insertAnswer(@Param("answer") Answer answer,
+                     @Param("questionId") String questionId);
 
     /**
      * 修改回答
@@ -75,6 +77,13 @@ public interface AnswerMapper {
      * @param lock
      * @return
      */
-    int answerLock(@Param("answerId") String answerId, @Param("lock")int lock);
+    int answerLock(@Param("answerId") String answerId,
+                   @Param("answerLock")int lock);
 
+    /**
+     * 获取指定回答的锁
+     * @param answerId
+     * @return
+     */
+    int getAnswerLock(String answerId);
 }

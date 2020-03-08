@@ -81,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
             map.put("questionContent", question.getQuestionContent());
             map.put("boardId", question.getBoardId());
             map.put("questionCreateTime", question.getQuestionCreateTime());
-            map.put("lock",question.getLock());
+            map.put("lock",question.getQuestionLock());
         }else {
             throw new BbsException("查找失败！");
         }
@@ -102,7 +102,7 @@ public class QuestionServiceImpl implements QuestionService {
                 map.put("questionContent", question.getQuestionContent());
                 map.put("boardId", question.getBoardId());
                 map.put("questionCreateTime", question.getQuestionCreateTime());
-                map.put("lock",question.getLock());
+                map.put("lock",question.getQuestionLock());
                 al.add(map);
             }
         }else {

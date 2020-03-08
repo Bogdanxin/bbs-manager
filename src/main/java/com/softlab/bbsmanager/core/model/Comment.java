@@ -62,4 +62,9 @@ public class Comment {
      * 对comment的评论，指向评论的评论
      */
     private String toCommentId;
+
+    /**
+     * 评论锁
+     */
+    private int commentLock;
 }

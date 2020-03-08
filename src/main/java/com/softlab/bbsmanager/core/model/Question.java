@@ -45,5 +45,5 @@ public class Question {
     /**
      * 问题锁
      */
-    private int lock;
+    private int questionLock;
 }

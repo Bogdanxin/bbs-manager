@@ -89,5 +89,21 @@ public class QuestionApi {
         }
     }
 
+    @RequestMapping(value = "/lockQuestion/{id}", method = RequestMethod.POST)
+    public RestData lockQuestion(@PathVariable String id,
+                                /* HttpServletRequest request,*/
+                                 @RequestParam("lock") int lock){
+        logger.info("lock comment by id : " + id);
+
+        /*if (VerifyUtil.verifyUserType(request) != BOARD_MASTER) {
+            return new RestData(1,"用户未授权！");
+        }
+        */
+        try {
+            return questionService.lockQuestionById(id, lock);
+        }catch (BbsException b){
+            return new RestData(b.getMessage());
+        }
+    }
 
 }

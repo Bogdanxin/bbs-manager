@@ -44,13 +44,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public RestData lockArticleById(String articleId, int lock) throws BbsException {
         if (articleMapper.lockArticleById(articleId, lock) > 0) {
-            return (lock == 0)?
-                    new RestData(0, "文章锁定成功！")
-                    : new RestData(0, "文章解锁成功！");
+            return (lock == 1)?
+                    new RestData(0, "文章解锁成功！")
+                    : new RestData(0, "文章锁定成功！");
         }else {
-            throw (lock == 0)?
-                    new BbsException( "文章锁定失败！")
-                    : new BbsException("文章解锁失败！");
+            throw (lock == 1)?
+                    new BbsException( "文章解锁失败！")
+                    : new BbsException("文章锁定失败！");
         }
     }
 

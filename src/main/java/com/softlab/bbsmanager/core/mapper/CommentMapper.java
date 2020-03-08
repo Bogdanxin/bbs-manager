@@ -128,5 +128,20 @@ public interface CommentMapper {
      */
     Comment selectCommentById(String commentId);
 
+    /**
+     * 锁定评论或者解锁评论
+     * @param commentId
+     * @param lock
+     * @return
+     */
+    int lockComment(@Param("commentId") String commentId,
+                    @Param("commentLock") int lock);
+
+    /**
+     * 获取指定评论的锁
+     * @param commentId
+     * @return
+     */
+    int getCommentLock(String commentId);
 }
 

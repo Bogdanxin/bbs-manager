@@ -3,10 +3,9 @@ package com.softlab.bbsmanager.service.impl;
 import com.softlab.bbsmanager.common.BbsException;
 import com.softlab.bbsmanager.common.RestData;
 import com.softlab.bbsmanager.core.mapper.AnswerMapper;
+import com.softlab.bbsmanager.core.mapper.QuestionMapper;
 import com.softlab.bbsmanager.core.model.Answer;
-import com.softlab.bbsmanager.core.model.User;
 import com.softlab.bbsmanager.service.AnswerService;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +25,24 @@ import java.util.Map;
 public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerMapper answerMapper;
+    private final QuestionMapper questionMapper;
 
     @Autowired
-    public AnswerServiceImpl(AnswerMapper answerMapper) {
+    public AnswerServiceImpl(AnswerMapper answerMapper, QuestionMapper questionMapper) {
         this.answerMapper = answerMapper;
+        this.questionMapper = questionMapper;
     }
 
     @Override
-    public RestData insertAnswer(Answer answer) throws BbsException {
-        if (answerMapper.insertAnswer(answer) > 0) {
-            return new RestData(0,"添加成功！");
+    public RestData insertAnswer(Answer answer, String questionId) throws BbsException {
+        if (questionMapper.getQuestionLock(questionId) == 0){
+            return new RestData(1,"该问题已经锁定，无法进行回答！");
+        }
+
+        if (answerMapper.insertAnswer(answer, questionId) > 0) {
+            return new RestData(0,"回答成功！");
         }else {
-            throw new BbsException("添加失败！");
+            throw new BbsException("回答失败！");
         }
     }
 
@@ -65,7 +70,7 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer = answerMapper.selectAnswerById(answerId);
 
         if (answer != null) {
-            map = new HashMap<>();
+            map = new HashMap<>(8);
             map.put("answerId", answer.getAnswerId());
             map.put("userId", answer.getUserId());
             map.put("answerContent", answer.getAnswerContent());
@@ -87,7 +92,7 @@ public class AnswerServiceImpl implements AnswerService {
         List<Answer> answers = answerMapper.selectAnswerByUserId(userId);
         if (answers != null && answers.size() != 0) {
             for (Answer answer : answers){
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>(8);
                 map.put("answerId", answer.getAnswerId());
                 map.put("userId", answer.getUserId());
                 map.put("answerContent", answer.getAnswerContent());
@@ -110,7 +115,7 @@ public class AnswerServiceImpl implements AnswerService {
         List<Answer> answers = answerMapper.selectAnswerByQuestionId(questionId);
         if (answers != null && answers.size() != 0) {
             for (Answer answer : answers){
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>(8);
                 map.put("answerId", answer.getAnswerId());
                 map.put("userId", answer.getUserId());
                 map.put("answerContent", answer.getAnswerContent());
@@ -132,6 +137,19 @@ public class AnswerServiceImpl implements AnswerService {
             return new RestData(0,"点赞成功！");
         }else {
             throw new BbsException("点赞失败！");
+        }
+    }
+
+    @Override
+    public RestData lockAnswer(String answerId, int lock) throws BbsException {
+        if (answerMapper.answerLock(answerId, lock) > 0) {
+            return lock == 1 ?
+                    new RestData(0, "解锁成功！") :
+                    new RestData(0, "锁定成功！");
+        }else {
+            throw lock == 1 ?
+                    new BbsException("解锁失败！") :
+                    new BbsException("锁定失败！");
         }
     }
 }

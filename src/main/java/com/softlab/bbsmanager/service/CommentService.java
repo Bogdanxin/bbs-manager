@@ -102,4 +102,13 @@ public interface CommentService {
      * @throws BbsException
      */
     Map<String,Object> selectCommentById(String commentId) throws BbsException;
+
+    /**
+     * 锁定评论或者解锁评论
+     * @param commentId
+     * @param lock
+     * @return
+     * @throws BbsException
+     */
+    RestData lockCommentById(String commentId, int lock) throws BbsException;
 }

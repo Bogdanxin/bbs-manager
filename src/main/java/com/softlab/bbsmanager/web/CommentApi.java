@@ -6,6 +6,7 @@ import com.softlab.bbsmanager.common.util.JsonUtil;
 import com.softlab.bbsmanager.common.util.VerifyUtil;
 import com.softlab.bbsmanager.core.model.Comment;
 import com.softlab.bbsmanager.service.CommentService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class CommentApi {
                                   @RequestParam("commentType") int commentType,
                                   @RequestBody )*/
 
-    @RequestMapping(value = "/insertArticleComment/{id}", method = RequestMethod.POST)
-    public RestData insertArticleComment(@PathVariable String id,
-                                         @RequestBody Comment comment){
+    @RequestMapping(value = "/insertArticleComment", method = RequestMethod.POST)
+    public RestData insertArticleComment(@RequestBody Comment comment,
+                                         @Param("articleId")String id){
         logger.info("insert article comment: "+ JsonUtil.getJsonFromObj(comment)
                 + " by id : " + id);
         try {
@@ -50,8 +51,8 @@ public class CommentApi {
         }
     }
 
-    @RequestMapping(value = "/insertAnswerComment/{id}", method = RequestMethod.POST)
-    public RestData insertAnswerComment(@PathVariable String id,
+    @RequestMapping(value = "/insertAnswerComment", method = RequestMethod.POST)
+    public RestData insertAnswerComment(@Param("answerId") String id,
                                         @RequestBody Comment comment){
         logger.info("insert answer comment: " + JsonUtil.getJsonFromObj(comment) + "by id: "+ id);
 
@@ -62,8 +63,8 @@ public class CommentApi {
         }
     }
 
-    @RequestMapping(value = "/insertCommentToComment/{id}", method = RequestMethod.POST)
-    public RestData insertCommentToComment(@PathVariable String id,
+    @RequestMapping(value = "/insertCommentToComment", method = RequestMethod.POST)
+    public RestData insertCommentToComment(@Param("commentId") String id,
                                            @RequestBody Comment comment){
         logger.info("insert answer comment : " + JsonUtil.getJsonFromObj(comment)
                 + " by id : " + id);
@@ -144,4 +145,20 @@ public class CommentApi {
         }
     }
 
+    @RequestMapping(value = "/lockComment/{id}", method = RequestMethod.POST)
+    public RestData lockCommentById(@PathVariable String id,
+                                   /* HttpServletRequest request,*/
+                                    @RequestParam("lock") int lock){
+        logger.info("lock comment by id : " + id);
+
+        /*if (VerifyUtil.verifyUserType(request) != BOARD_MASTER) {
+            return new RestData(1,"用户未授权！");
+        }
+        */
+        try {
+            return commentService.lockCommentById(id, lock);
+        }catch (BbsException b){
+            return new RestData(b.getMessage());
+        }
+    }
 }

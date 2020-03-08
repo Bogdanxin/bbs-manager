@@ -8,7 +8,7 @@
         <result column="que_content" property="questionContent"/>
         <result column="board_id" property="boardId"/>
         <result column="que_createtime" property="questionCreateTime"/>
-        <result column="que_lock" property="lock"/>
+        <result column="que_lock" property="questionLock"/>
     </resultMap>
 
     <insert id="insertQuestion" parameterType="Question">
@@ -39,9 +39,12 @@
         where que_id = #{questionId}
     </delete>
 
-    <!--<update id="lockQuestionById">
-        update
-    </update>-->
+    <update id="lockQuestionById">
+        update questions
+        set que_lock = #{questionLock}
+        where questionLock = #{questionId}
+    </update>
+
     <select id="selectQuestionById" resultMap="Question">
         select * from questions where que_id = #{questionId}
     </select>
@@ -52,5 +55,9 @@
 
     <select id="selectQuestionByBoardId" resultMap="Question">
         select * from questions where board_id = #{boardId}
+    </select>
+
+    <select id="getQuestionLock">
+        select que_lock where que_id = #{questionId}
     </select>
 </mapper>

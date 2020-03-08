@@ -19,10 +19,11 @@ public interface AnswerService {
     /**
      * 添加一个回答
      * @param answer
+     * @param questionId
      * @return
      * @throws BbsException
      */
-    RestData insertAnswer(Answer answer) throws BbsException;
+    RestData insertAnswer(Answer answer, String questionId) throws BbsException;
 
     /**
      * 删除指定id的回答
@@ -72,4 +73,13 @@ public interface AnswerService {
      * @throws BbsException
      */
     RestData likeAnswer(String answerId) throws BbsException;
+
+    /**
+     * 锁定回答或者解锁回答
+     * @param answerId
+     * @param lock
+     * @return
+     * @throws BbsException
+     */
+    RestData lockAnswer(String answerId, int lock) throws BbsException;
 }

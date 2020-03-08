@@ -49,7 +49,7 @@ public interface QuestionMapper {
      * @return
      */
     int lockQuestionById(@Param("questionId") String questionId,
-                         @Param("lock") int lock);
+                         @Param("questionLock") int lock);
 
     /**
      * 查找指定id的问题
@@ -71,4 +71,11 @@ public interface QuestionMapper {
      * @return
      */
     List<Question> selectQuestionByBoardId(String boardId);
+
+    /**
+     * 获取指定id的问题的lock
+     * @param questionId
+     * @return
+     */
+    int getQuestionLock(String questionId);
 }
